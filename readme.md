@@ -10,11 +10,14 @@ A ROS Node for streaming image topics from ROS with gStreamer. Using CV2 Bridge 
   - CMakeLists.txt:       CMake project configuration file
   - package.xml:          ROS/Catkin package file
 
-**REQUIREMENTS:**  
+**REQUIREMENTS:**
+
 CV2 built from source with gStreamer package is required to write CV2 pipeline for gStreamer.
 
-**SETUP**
+**SETUP:**
+
 Clone the repository into your catkin workspace and build with catkin_make
 
-**LAUNCH**
+**LAUNCH:**
+
 A Sample launch script is provided in the launch directory. Configure the topic names and other parameters here
