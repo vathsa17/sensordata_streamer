@@ -1,6 +1,6 @@
 
 <launch>
-    <param name="lidar_topic" type="str" value="/bf_lidar/pointcloud2"/>
+    <param name="lidar_topic" type="str" value="/bf_lidar/points_raw"/>
     <param name="server_ip" type="str" value="10.147.20.60" />
     <param name="server_port" type="int" value="20000" />
     <node name="node_name" pkg="videoStreamer" type="pointcloud_streamer.py" output="screen"/>

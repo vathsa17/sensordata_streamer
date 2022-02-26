@@ -26,7 +26,7 @@ if not out.isOpened():
 
 
 
-print(cv2.getBuildInformation())
+#print(cv2.getBuildInformation())
 
 
 def streamer():
@@ -43,7 +43,7 @@ def send(data):
         frame=bridge.compressed_imgmsg_to_cv2(data,"bgr8")
     else:
         frame=bridge.imgmsg_to_cv2(data, "bgr8")
-    print("Streaming")
+    #print("Streaming")
     if(h,w != frame.shape[:2]):
         frame=cv2.resize(frame,(w,h))
     cv2.imshow("Sent",frame)

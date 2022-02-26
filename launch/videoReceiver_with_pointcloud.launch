@@ -1,4 +1,5 @@
 
 <launch>
-    <node name="node_name" pkg="videoStreamer" type="receiver_with_pointcloud.py" output="screen"/>
+    <node name="videoReceiver" pkg="videoStreamer" type="receiver.py" output="screen" />
+    <node name="PointcloudReceiver" pkg="videoStreamer" type="pointcloud_receiver.py" output="screen" />
 </launch>
