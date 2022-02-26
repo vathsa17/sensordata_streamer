@@ -1,6 +1,8 @@
 # Sensor Data Streamer from ROS master to Remote server
 A ROS Node for streaming image topics and pointcloud from ROS with gStreamer and UDP sockets. At he receiving end you you can store the images and pointclouds synchronously. Using CV2 Bridge for ROS, we stream the image topics with CV2 gStreamer pipeline. We use UDP sockets to stream the received pointcloud. 
 
+![alt text](images/Setup.PNG)
+
 ## For Camera Images
 At sensor end, we subscribe to image topics. The ROS image topics are first converted to CV2 images using cv2_bridge. You can subscribe to raw image or compressed image. Configuration parameters can be edited in launch file.
 
