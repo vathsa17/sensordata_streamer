@@ -3,8 +3,8 @@
 #!/usr/bin/env python
 
 #############################
-# UDP Video Stream Receiver
-# A Simple example of Video Stream Receiveing with OpenCV and gStreamer
+# Synchronized Pointcloud Receiver
+# Python script for receiveing Synchronized Pointclouds from Sensor Application PC
 # Shrivathsa.udupa@gmail.com
 #############################
 
@@ -16,7 +16,6 @@ import cv2
 import numpy as np
 import datetime
 import os
-import redis
 import rospy
 #import open3d as o3d
 import socket
@@ -25,18 +24,18 @@ import pickle
 import struct
 
 
-
-
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.bind(("127.0.0.1", 20002))
-sock.listen(5)
-(client, addr) = sock.accept()
-print("Received a connection from ", addr)
-
 numpyArBytes=b''
 HEADERSIZE=10
 data_save_path=rospy.get_param('save_path',"/home/in2lab/Data/")
+server_IP=rospy.get_param('server_IP',"192.168.199.199")
+pointcloud_port=rospy.get_param('pointcloud_port',"20067")
 savePath=data_save_path+"/{}/{}".format(datetime.datetime.now().date(),"Lidar")
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.bind((server_IP, pointcloud_port))
+sock.listen(5)
+(client, addr) = sock.accept()
+print("Received a connection from ", addr)
 
 print(savePath)
 if not os.path.exists(savePath):

@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 
-#!/usr/bin/env python
-
 #############################
-# UDP Video Stream Receiver
-# A Simple example of Video Stream Receiveing with OpenCV and gStreamer
+# Synchronized Image Frame Receiver
+# Python script used to receive the compressed image frame from application pc and decomress it and store it as cv2 images
 # Shrivathsa.udupa@gmail.com
 #############################
 
@@ -16,7 +14,6 @@ import cv2
 import numpy as np
 import datetime
 import os
-import redis
 import rospy
 #import open3d as o3d
 import socket
@@ -26,16 +23,23 @@ import struct
 
 
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.bind(("127.0.0.1", 20001))
-sock.listen(5)
-(client_i, addr) = sock.accept()
-print("Received a connection from ", addr)
+
 
 numpyArBytes=b''
 HEADERSIZE=10
 cameraID=62
 data_save_path=rospy.get_param('save_path',"/home/in2lab/Data/")
+server_IP=rospy.get_param('server_IP',"192.168.199.199")
+image_port=rospy.get_param('image_port',"20062")
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.bind((server_IP, image_port))
+
+
+sock.listen(5)
+(client_i, addr) = sock.accept()
+print("Received a connection from ", addr)
+
+
 savePath=data_save_path+"/{}/{}".format(datetime.datetime.now().date(),"Image")
 
 print(savePath)
