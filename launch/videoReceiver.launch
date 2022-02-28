@@ -1,4 +1,0 @@
-
-<launch>
-    <node name="node_name" pkg="videoStreamer" type="receiver.py" output="screen"/>
-</launch>

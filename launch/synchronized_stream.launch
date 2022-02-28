@@ -1,13 +1,13 @@
-
 <launch>
     <param name="Camera_image_topic" type="str" value="/camera/image_raw/compressed" />
     <param name="isCompressed" type="bool" value="True" />
+    <param name="isColor" type="bool" value="True" />
     <param name="fps" type="int" value="30" />
     <param name="width" type="int" value="640" />
     <param name="height" type="int" value="480" />
     <param name="server_ip" type="str" value="127.0.0.1" />
-    <param name="server_port" type="int" value="20001" />
+    <param name="image_server_port" type="int" value="20001" />
+    <param name="pointcloud_server_port" type="int" value="20002" />
     <param name="lidar_topic" type="str" value="/bf_lidar/points_raw"/>
-    <node name="node_name" pkg="videoStreamer" type="videoStreamer.py" output="screen" />
-    <node name="pointcloud_streamer" pkg="videoStreamer" type="pointcloud_streamer.py" output="screen" />
+    <node name="synchronized_streamer" pkg="videoStreamer" type="synchronized_stream.py" output="screen" />
 </launch>
