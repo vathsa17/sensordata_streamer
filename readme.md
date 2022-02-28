@@ -29,8 +29,7 @@ The saved .npz files can be converted to .pcd for visualization or storing in th
   - package.xml:          ROS/Catkin package file
 
 **REQUIREMENTS:**
-cv2 for Python2
-numpy for Python2
+Refer [requirements.md]
 
 
 
@@ -39,5 +38,11 @@ numpy for Python2
 Clone the repository into your catkin workspace and build with catkin_make
 
 **LAUNCH:**
+At Sensor End
+source your catkin workspace and launch
+roslaunch sensordata_streamer synchronized_stream.launch
 
-A Sample launch script is provided in the launch directory. Configure the topic names and other parameters here
+At Server End
+Either run the python scripts with python2 or
+Launch with ROS launch using
+roslaunch synchronized_receive.launch
