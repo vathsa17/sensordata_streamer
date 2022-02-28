@@ -59,22 +59,22 @@ while True:
                     print("Receiving")
                     bSize += 16000
                     if len(numpyArBytes) == fileSize:
-                        #try:
-                        byte_data=bz2.decompress(numpyArBytes)
-                        pc=pickle.loads(byte_data)
-                        print(len(pc))
-                        current_date_and_time = datetime.datetime.now()
-                        current_date_and_time_string = re.sub(r"[^a-zA-Z0-9]","",str(current_date_and_time))
-                        filename=savePath+"/"+current_date_and_time_string+".npz"
-                        np.savez_compressed(filename,pc)
-                        print("Saved Pointcloud")
-                        pc=b''
-                        numpyArBytes=b''
-                        break
-                        #except Exception as e:
-                        #    print("Passing")
-                        #    pc=b''
-                        #    numpyArBytes=b''
-                        #    break
+                        try:                                        
+                                byte_data=bz2.decompress(numpyArBytes)
+                                pc=pickle.loads(byte_data)
+                                print(len(pc))
+                                current_date_and_time = datetime.datetime.now()
+                                current_date_and_time_string = re.sub(r"[^a-zA-Z0-9]","",str(current_date_and_time))
+                                filename=savePath+"/"+current_date_and_time_string+".npz"
+                                np.savez_compressed(filename,pc)
+                                print("Saved Pointcloud")
+                                pc=b''
+                                numpyArBytes=b''
+                                break
+                        except Exception as e:
+                                print("Passing")
+                                pc=b''
+                                numpyArBytes=b''
+                                break
         #except Exception as e:
         #    pass

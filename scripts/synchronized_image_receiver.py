@@ -15,10 +15,8 @@ import numpy as np
 import datetime
 import os
 import rospy
-#import open3d as o3d
 import socket
 import pickle
-#import pcl
 import struct
 
 
@@ -65,22 +63,22 @@ while True:
                     bSize += 64000
                     print(len(numpyArBytes))
                     if len(numpyArBytes) == fileSize:
-                        #try:
-                        byte_data=bz2.decompress(numpyArBytes)
-                        pc=pickle.loads(byte_data)
-                        print(pc.shape)
-                        current_date_and_time = datetime.datetime.now()
-                        current_date_and_time_string = re.sub(r"[^a-zA-Z0-9]","",str(current_date_and_time))
-                        fimename_image=savePath+"/"+current_date_and_time_string+".jpg"
-                        cv2.imwrite(fimename_image,pc)
-                        print("Saved Image")
-                        pc=b''
-                        numpyArBytes=b''
-                        break
-                        #except Exception as e:
-                        #    print("Passing")
-                        #    pc=b''
-                        #    numpyArBytes=b''
-                        #    break
+                        try:
+                                byte_data=bz2.decompress(numpyArBytes)
+                                pc=pickle.loads(byte_data)
+                                print(pc.shape)
+                                current_date_and_time = datetime.datetime.now()
+                                current_date_and_time_string = re.sub(r"[^a-zA-Z0-9]","",str(current_date_and_time))
+                                fimename_image=savePath+"/"+current_date_and_time_string+".jpg"
+                                cv2.imwrite(fimename_image,pc)
+                                print("Saved Image")
+                                pc=b''
+                                numpyArBytes=b''
+                                break
+                        except Exception as e:
+                                print("Passing")
+                                pc=b''
+                                numpyArBytes=b''
+                                break
         #except Exception as e:
         #    pass
