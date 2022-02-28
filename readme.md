@@ -49,7 +49,7 @@ Either run the python scripts with python2 or
 Launch with ROS launch using
 roslaunch synchronized_receive.launch
 
-** Improvements **
+**Improvements**
 
 TCP Server can be used as server for reliable connection
 Current code does not consider the loss of packet and might crash in such scenarios
