@@ -29,6 +29,7 @@ The saved .npz files can be converted to .pcd for visualization or storing in th
   - package.xml:          ROS/Catkin package file
 
 **REQUIREMENTS:**
+
 Refer [requirements.md]
 
 
@@ -38,6 +39,7 @@ Refer [requirements.md]
 Clone the repository into your catkin workspace and build with catkin_make
 
 **LAUNCH:**
+
 At Sensor End
 source your catkin workspace and launch
 roslaunch sensordata_streamer synchronized_stream.launch
@@ -46,3 +48,8 @@ At Server End
 Either run the python scripts with python2 or
 Launch with ROS launch using
 roslaunch synchronized_receive.launch
+
+** Improvements **
+
+TCP Server can be used as server for reliable connection
+Current code does not consider the loss of packet and might crash in such scenarios
