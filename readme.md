@@ -1,17 +1,17 @@
 # Sensor Data Streamer from ROS master to Remote server
-A ROS Node for streaming image topics and pointcloud from ROS with gStreamer and UDP sockets. At he receiving end you you can store the images and pointclouds synchronously. Using CV2 Bridge for ROS, we stream the image topics with CV2 gStreamer pipeline. We use UDP sockets to stream the received pointcloud. 
+A ROS Node for streaming image topics and pointcloud from ROS with gStreamer and TCP sockets. At he receiving end you you can store the images and pointclouds synchronously. Using CV2 Bridge for ROS, we stream the image topics with CV2 gStreamer pipeline. We use TCP sockets to stream the received pointcloud. 
 
 ![alt text](images/Setup.PNG)
 
 ## For Camera Images
-At sensor end, we subscribe to image topics. The ROS image topics are first converted to CV2 images using cv2_bridge. You can subscribe to raw image or compressed image. Configuration parameters can be edited in launch file. The CV2 image which is essentially a numpy array, is then compressed and sent over UDP socket to server.
+At sensor end, we subscribe to image topics. The ROS image topics are first converted to CV2 images using cv2_bridge. You can subscribe to raw image or compressed image. Configuration parameters can be edited in launch file. The CV2 image which is essentially a numpy array, is then compressed and sent over TCP socket to server.
 
 At the receiver end, the received packets are saved with CV2 module.
 
 ## For Lidar Point Clouds
 At Streamer end, we subscribe to "Pointcloud2" topic and data from the topic will be first converted to numpy array, pickeled it to serialize the data and compressed using bz2.  
 
-At the receiveing end, the data will be received from UDP sockets and first unzip and depickled and then stored as compressed numpy array. With postprocessing, we can convert the npz array into .pcd file.
+At the receiveing end, the data will be received from TCP sockets and first unzip and depickled and then stored as compressed numpy array. With postprocessing, we can convert the npz array into .pcd file.
 
 For every pointcloud received, we check the latest image frame from the redis server and write this image into the storage path. The time synchronization of different sensor data is enabled with message_filters ApproximateSync module.
 
@@ -21,7 +21,7 @@ The saved .npz files can be converted to .pcd for visualization or storing in th
 
 
 **LAYOUT:**
-- gStreamer_ROS/
+- sensordata_streamer/
   - launch/:              roslaunch files
   - src/:                 source files
   - script/:			Python scripts for the project
