@@ -10,4 +10,9 @@ sudo apt-get install redis-server
 Then demonize the redis-server with 
 redis-server --daemonize yes
 
-### CV2 Built from Source with gStreamer
+### Install Python PCL
+sudo apt install libpcl-dev -y
+pip install python-pcl (or pip3)
+
+## At Application PC (Sensor PC)
+bz2
