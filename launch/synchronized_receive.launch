@@ -3,6 +3,8 @@
     <param name="server_IP" type="str" value="127.0.0.1" />
     <param name="image_port" type="int" value="20062" />
     <param name="pointcloud_port" type="int" value="20067" />
+    <param name="radardata_port" type="int" value="20068" />
     <node name="synchronized_img_receiver" pkg="sensordata_streamer" type="synchronized_image_receiver.py" output="screen" />
     <node name="synchronized_pcd_receiver" pkg="sensordata_streamer" type="synchronized_pointcloud_receiver.py" output="screen" />
+    <node name="synchronized_radar_receiver" pkg="sensordata_streamer" type="synchronized_radar_data_receiver.py" output="screen" />
 </launch>

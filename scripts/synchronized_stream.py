@@ -18,8 +18,23 @@ import bz2
 import rospy
 from cv_bridge import CvBridge
 bridge = CvBridge()
+from io import StringIO,BytesIO
 import cv2
+from pb_msgs.msg import ClusterList
 
+b=BytesIO()
+
+def send_radarCluser(radar_data):
+    d=radar_data.serialize(buff=b)
+    serialized_data=b.getvalue()
+    contents = bz2.compress(serialized_data,compresslevel=9)
+    msg_p ="{:<10}".format(str(len(contents)))
+    print("Streaming Radar Data",msg_p)
+    radardata_s.sendall(bytes(msg_p))
+    data_p = radardata_s.recv(128)
+    print(str(data_p))
+    if(data_p):
+        radardata_s.sendall(contents)
 
 
 
@@ -28,8 +43,6 @@ def send_pointcloud(pcd):
     numpyArBytes=pickle.dumps(pc, protocol=0)
     contents = bz2.compress(numpyArBytes,compresslevel=9)
     new_msg=True
-    print(len(pc))
-    print(len(contents))
     msg_p ="{:<10}".format(str(len(contents)))
     print("Streaming PCD",msg_p)
     pointcloud_s.sendall(bytes(msg_p))
@@ -62,17 +75,25 @@ def send_image(img):
         image_s.sendall(contents)
 
 
-def callback(image, pointcloud):
+def callback(image, pointcloud,radar_data):
     print("IN CALLBACK")
     send_image(image)
     send_pointcloud(pointcloud)
+    send_radarCluser(radar_data)
 
 image_topic_name=rospy.get_param('Camera_image_topic',"/camera/image_raw")
 pointcloud_topic_name=rospy.get_param('lidar_topic',"/bf_lidar/pointcloud2")
+radardata_topic_name=rospy.get_param('radar_topic',"/RadarFrames")
+
 
 server_address=rospy.get_param('server_ip',"127.0.0.1")
-image_server_port=rospy.get_param('image_server_port',"20001")
-pointcloud_server_port=rospy.get_param('pointcloud_server_port',"20002")
+
+
+image_server_port=rospy.get_param('image_server_port',"20063")
+pointcloud_server_port=rospy.get_param('pointcloud_server_port',"20067")
+radardata_server_port=rospy.get_param('radardata_server_port',"20068")
+
+
 isCompressed=rospy.get_param("isCompressed",True)
 isColor=rospy.get_param("isColor",False)
 w=rospy.get_param('width',640)
@@ -83,9 +104,12 @@ image_s.connect((server_address, image_server_port))
 
 pointcloud_s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 pointcloud_s.connect((server_address, pointcloud_server_port))
-print("Filtering from",image_topic_name,pointcloud_topic_name)
+
+radardata_s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+radardata_s.connect((server_address, radardata_server_port))
+
 rospy.init_node('datastreamer', anonymous=True)
-print("Filtering from",image_topic_name,pointcloud_topic_name)
+print("Filtering from",image_topic_name,pointcloud_topic_name,radardata_topic_name)
 if isCompressed:
     image_sub = message_filters.Subscriber(image_topic_name, CompressedImage)
 else:
@@ -93,6 +117,9 @@ else:
 
 pointcloud_sub = message_filters.Subscriber(pointcloud_topic_name, PointCloud2)
 
-ts = message_filters.ApproximateTimeSynchronizer([image_sub, pointcloud_sub], queue_size=50, slop=0.5)
+radardata_sub=message_filters.Subscriber(radardata_topic_name, ClusterList)
+
+
+ts = message_filters.ApproximateTimeSynchronizer([image_sub, pointcloud_sub,radardata_sub], queue_size=50, slop=0.5,allow_headerless=True)
 ts.registerCallback(callback)
 rospy.spin()
