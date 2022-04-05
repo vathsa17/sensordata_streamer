@@ -19,6 +19,10 @@ The code primarily developed to record the sensor data in the R&D Project IN2Lab
 
 The saved .npz files can be converted to .pcd for visualization or storing in the post processing. A sample post processing script "converter.py" is provided. You can run the convertor.py only with Python3
 
+## For Radar Point Cloud
+At the sensor end, we subscribe to corresponding radar data in the form of ROS topics. The Data is filtered for synchronization and Synchronized data is compressed and sent to TCP server for storing.
+At server end the data is stored in .npz format
+
 
 **LAYOUT:**
 - sensordata_streamer/
