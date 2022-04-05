@@ -13,8 +13,6 @@ At Streamer end, we subscribe to "Pointcloud2" topic and data from the topic wil
 
 At the receiveing end, the data will be received from TCP sockets and first unzip and depickled and then stored as compressed numpy array. With postprocessing, we can convert the npz array into .pcd file.
 
-For every pointcloud received, we check the latest image frame from the redis server and write this image into the storage path. The time synchronization of different sensor data is enabled with message_filters ApproximateSync module.
-
 The code primarily developed to record the sensor data in the R&D Project IN2Lab.
 
 The saved .npz files can be converted to .pcd for visualization or storing in the post processing. A sample post processing script "converter.py" is provided. You can run the convertor.py only with Python3
